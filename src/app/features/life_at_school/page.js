@@ -24,31 +24,31 @@ export default function page() {
         <div className='grid md:grid-cols-2 lg:grid-cols-3 sm:grid-cols-1 gap-6 lg:p-10 md:p-10 sm:p-10 p-2 mx-auto'>
           {[
             {
-              image: "/classImages/class.jpg",
+              image: "/labsImages/2 (2).jpg",
               headings: "Our smart classes",
               paragraph: "Number sense, basic operations, problem-solving, and logic."
             },
             {
-              image: "/labsImages/science.JPG",
+              image: "/labsImages/2 (12).jpg",
               headings: "Science",
               paragraph: "Exploring the natural world through hands-on experiments and investigations."
             }, {
-              image: "/labsImages/physical.JPG",
+              image: "/images/3 (3).jpeg",
               headings: "Physical Education",
               paragraph: "Promoting physical fitness, coordination, and teamwork."
             },
             {
-              image: "/labsImages/art.jpg",
+              image: "/labsImages/2 (20).jpeg",
               headings: "Art and Crafts",
               paragraph: "Encouraging creativity through various art forms and crafts."
             },
             {
-              image: "/labsImages/languageArt.jpg",
+              image: "/labsImages/2 (16).jpg",
               headings: "Language Art",
               paragraph: "Reading, writing, storytelling, and communication skills."
             },
             {
-              image: "/labsImages/social.jpg",
+              image: "/images/3 (1).jpeg",
               headings: "Social Studeies",
               paragraph: "Cultivating an understanding of diverse cultures and communities."
             },
