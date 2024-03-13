@@ -83,7 +83,7 @@ export default function LatestNews({schoolUuid=''}) {
         <h6 className="text-2xl text-black font-bold">
           _________________________
         </h6>
-        <h5 className="text-black text-2xl font-bold">
+        <h5 className="text-black text-3xl font-bold">
           BE UPDATED ALL THE TIME
         </h5>
       </div>
