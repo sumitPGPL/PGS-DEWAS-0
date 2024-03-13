@@ -1,0 +1,8 @@
+
+.primary-theme {
+    @apply bg-cyan-200;
+  }
+  
+.primary{
+    @apply bg-[#065e49];
+}
