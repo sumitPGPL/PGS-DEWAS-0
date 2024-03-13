@@ -34,7 +34,7 @@ export default function LatestNews({schoolUuid=''}) {
 
   const fetchEvents = async (page) => {
       const eventData = await getEvent({ schoolUuid,limit: 6, page });
-      const eventItemsWithType = eventData.data.map((event) => ({
+      const eventItemsWithType = eventData?.data.map((event) => ({
         ...event,
         type: "event",
       }));
