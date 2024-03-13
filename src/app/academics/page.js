@@ -14,7 +14,7 @@ export default function page() {
         <div
           className="w-11/12 flex justify-center  p-5 rounded-3xl sm:border-2 sm:1/2 mt-8"
           style={{
-            backgroundImage: "url('/bggreen.svg')",
+            backgroundImage: "url('/bgGreen.svg')",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
             backgroundSize: "cover",
