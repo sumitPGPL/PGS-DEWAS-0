@@ -17,7 +17,7 @@ const contactMethods = [
   },
   {
     imageUrl: "/phone.svg",
-    value: "+91 7024104142",
+    value: "+91 9109999593",
   },
   {
     imageUrl: "/hours.svg",
@@ -25,7 +25,7 @@ const contactMethods = [
   },
   {
     imageUrl: "/location.svg",
-    value: "BHAWARASALA dewas",
+    value: "Ganga Nagar A.B. Road Dewas",
   },
 ];
 const ContactForm = () => {
@@ -206,8 +206,7 @@ const ContactForm = () => {
                     <div className="flex flex-col">
                       <h2 className="text-2xl">Main Office</h2>
                       <p className="text-gray-400">
-                        BHAWARASALA , BEHIND ARVINDO REVATI, Sanwer Rd, dewas,
-                        Madhya Pradesh 453555
+                      Ganga Nagar A. B. Road Dewas
                       </p>
                     </div>
                   </div>
@@ -218,8 +217,8 @@ const ContactForm = () => {
                     </div>
                     <div className="flex flex-col">
                       <h2 className="text-2xl">Call Us</h2>
-                      <p className="text-gray-400">Tel:+917024104142</p>
-                      <p className="text-gray-400">Fax:+917024104150</p>
+                      <p className="text-gray-400">Tel: 9109999593</p>
+                     
                     </div>
                   </div>
 

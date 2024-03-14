@@ -76,7 +76,7 @@ const Footer = () => {
                 <li>
                   <Link
                     target="_blank"
-                    href="https://pgs-bhaurasa-02.vercel.app/"
+                    href="https://pgs-bhaurasa-1.vercel.app/"
                     className="text-gray-700 transition hover:opacity-75"
                   >
                     PGS-Bhaurasa
@@ -86,11 +86,12 @@ const Footer = () => {
                 <li>
                   <Link
                     target="_blank"
-                    href="https://pgs-dewas-01.vercel.app/"
+                    href="https://www.pratibhaglobalschool.com/"
                     className="text-gray-700 transition hover:opacity-75"
                   >
-                    PGS-Dewas
+                    PGS-Indore
                   </Link>
+                  
                 </li>
               </ul>
             </div>
@@ -210,7 +211,7 @@ const Footer = () => {
                     href="#"
                     className="text-gray-700 transition hover:opacity-75"
                   >
-                    +91 7024104142
+                    +91 9109999593
                   </Link>
                 </li>
 
@@ -219,8 +220,7 @@ const Footer = () => {
                     href="#"
                     className="text-gray-700 transition hover:opacity-75"
                   >
-                    Main Office BHAWARASALA , BEHIND ARVINDO REVATI, Sanwer Rd,
-                    dewas, Madhya Pradesh 453555
+                   Ganga Nagar A.B. Road Dewas
                   </Link>
                 </li>
               </ul>
