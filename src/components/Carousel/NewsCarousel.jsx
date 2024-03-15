@@ -70,9 +70,7 @@ const NewsCarousel = ({ mixedData }) => {
         &gt; {/* Next button content */}
       </button>
 
-      <button className="p-2 bg-cyan-200 absolute -bottom-64 left-96  lg:bottom-4 lg:left-4 rounded-md ">
-        <Link href="/events">Events</Link>
-      </button>
+     
     </div>
   );
 };
