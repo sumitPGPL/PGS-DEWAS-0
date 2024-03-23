@@ -8,7 +8,7 @@ const eventDetails = {
   date: "08",
   month: "January",
   year: "2024",
-  location: "LNCT College, dewas",
+  location: "LNCT College, Indore",
   startTime: "2.30 pm",
   endTime: "5.30pm",
   heading: "Inter School Dance Competition",
@@ -25,7 +25,7 @@ const EventCard = ({ eventDetails }) => {
     eventDetails;
   return (
     <>
-      <div className="group w-full md:h-52 lg:h-52 sm:h-48 h-44 border-2 border-gray-300 rounded-2xl flex justify-around items-center p-2 md:p-4 sm:p-2 lg:p-4 hover:bg-cyan-200 hover:text-white">
+      <div className="group w-full md:h-52 lg:h-52 sm:h-48 h-44 border-2 border-gray-300 rounded-2xl flex justify-around items-center p-2 md:p-4 sm:p-2 lg:p-4 hover:bg-green-500 hover:text-white">
         <div className="border-2 border-gray-300 lg:w-[130px] lg:h-[130px] md:w-[130px] md:h-[130px] w-[120px] h-[120px] rounded-3xl flex flex-col p-2 ">
           <h1 className="md:text-5xl lg:text-5xl sm:text-4xl text-4xl text-center py-3 font-extrabold ">
             {date}

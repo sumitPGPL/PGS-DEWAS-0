@@ -12,10 +12,9 @@ const EventMain = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const images = [
-    "/adNews/1 (8).jpeg",
-    "/adNews/1 (1).jpeg",
-    "/adNews/1 (6).jpeg",
-    "/adNews/1 (9).jpeg",
+    "/events/bannerCarousel/jpeg-optimizer__DSC0752.JPG",
+    "/events/bannerCarousel/jpeg-optimizer__DSC1401.JPG",
+    "/events/bannerCarousel/jpeg-optimizer__DSC0444.JPG",
     // Add more images as needed
   ];
 
@@ -103,7 +102,7 @@ const EventMain = () => {
       title: "STEM Education Program",
       description:
         "Our program emphasizes Science, Technology, Engineering, and Mathematics (STEM) education, fostering critical thinking and problem-solving skills.",
-      bgColor: "bg-cyan-400",
+      bgColor: "bg-blue-400",
       textColor: "text-white",
     },
     {
@@ -117,7 +116,7 @@ const EventMain = () => {
       title: "STEM Education Program",
       description:
         "Our program emphasizes Science, Technology, Engineering, and Mathematics (STEM) education, fostering critical thinking and problem-solving skills.",
-      bgColor: "bg-cyan-400",
+      bgColor: "bg-blue-400",
       textColor: "text-white",
     },
     {
@@ -131,7 +130,7 @@ const EventMain = () => {
       title: "STEM Education Program",
       description:
         "Our program emphasizes Science, Technology, Engineering, and Mathematics (STEM) education, fostering critical thinking and problem-solving skills.",
-      bgColor: "bg-cyan-400",
+      bgColor: "bg-blue-400",
       textColor: "text-white",
     },
     {
@@ -152,12 +151,12 @@ const EventMain = () => {
       >
         <div className="md:max-w-[1480px] m-auto grid md:grid-cols-2 max-w-[600px]  px-4 md:px-0 mx-auto">
           <div className="flex flex-col justify-start gap-4 text-center">
-            <p className="py-2 text-2xl text-[#0891b2] font-medium">
+            <p className="py-2 text-2xl text-[#20B486] font-medium">
               Enriching Student Life
             </p>
             <h1 className="md:leading-[72px] py-2 md:text-6xl text-4xl font-semibold">
-              Learning <span className="text-[#0891b2]">with</span>{" "}
-              <span className="text-[#0891b2]">Discovery and Joy </span>
+              Learning <span className="text-[#20B486]">with</span>{" "}
+              <span className="text-[#20B486]">Discovery and Joy </span>
             </h1>
             <p className="py-2 text-lg text-center text-gray-600">
               Welcome to our Student Life page, where the magic of childhood

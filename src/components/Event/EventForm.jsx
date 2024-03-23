@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EventForm from "@/components/Event/EventForm"; // Assuming you have an EventForm component
 import { addEvent, updateEvent } from "@/lib/services/events/eventSevices"; // Replace with your actual API path
 import Loader from "@/components/Loader/Loader";
@@ -7,7 +7,7 @@ import { validator } from "@/lib/helpers/validator";
 import Notification from "@/components/Toast/Notification";
 import { scrollToTop } from "@/lib/helpers/scrollToTopOfContainer";
 import moment from "moment";
-import {ADMIN} from '@/lib/constants/index'
+import { ADMIN } from "@/lib/constants/index";
 import { first } from "lodash";
 import useDropdown from "@/hooks/useDropDown";
 
@@ -64,12 +64,7 @@ const fields = [
     type: "date-time",
     placeholder: "Select End Date",
   },
-  {
-    name: "OrganizationUuid",
-    label: "Organization UUID",
-    type: "text",
-    placeholder: "Enter Organization UUID",
-  },
+
   { name: "type", label: "Type", type: "text", placeholder: "Enter Type" },
   {
     name: "registrationRequired",
@@ -92,30 +87,30 @@ const fields = [
 // NewsForm component
 export default function NewsForm({
   onFormSubmit,
-  events,
+  events = [],
   selectedEventId,
-  ...others 
+  setSelectedEventId,
+  ...others
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setError] = useState({ msg: "", type: "" });
   const [isEditMode, setIsEditMode] = useState(false);
   const [formReset, setFormReset] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
+  const fileInputRef = useRef(null);
 
   const [eventData, setEventData] = useState({
     ...EVENTS_INITIAL,
-    startDate: moment().format("YYYY-MM-DDTHH:mm"), // Initialize with current date and time
-    endDate: moment().format("YYYY-MM-DDTHH:mm"), // Initialize with current date and time
+    startDate: moment().format("YYYY-MM-DD"), // Initialize with current date and time
+    endDate: moment().format("YYYY-MM-DD"), // Initialize with current date and time
   });
-  const { schools = [], schoolUuid = '', profile = {} } = others;
-  console.log(schools)
+  const { schools = [], schoolUuid = "", profile = {} } = others;
+
   const [organization, OrganizationDropDown, setOrganization] = useDropdown(
     "School",
     schoolUuid || first(schools).value,
     others?.schools || []
-
-    )
-
+  );
 
   useEffect(() => {
     if (selectedEventId) {
@@ -133,26 +128,30 @@ export default function NewsForm({
           endDate: moment(selectedEvent.endDate).format("YYYY-MM-DDTHH:mm:ss"),
           location: selectedEvent.location,
           category: selectedEvent.category,
-          OrganizationUuid: selectedEvent.OrganizationUuid,
           type: selectedEvent.type,
           registrationRequired: selectedEvent.registrationRequired,
           capacity: selectedEvent.capacity,
           registeredParticipants: selectedEvent.registeredParticipants,
         });
         setIsEditMode(true);
+        setValidationErrors({});
       }
     } else {
       setEventData({
         ...EVENTS_INITIAL,
         startDate: moment().format("YYYY-MM-DDTHH:mm"),
         endDate: moment().format("YYYY-MM-DDTHH:mm"),
+        startDate: moment().format("YYYY-MM-DDTHH:mm"),
+        endDate: moment().format("YYYY-MM-DDTHH:mm"),
       });
       setIsEditMode(false);
+      setValidationErrors({});
     }
   }, [selectedEventId, events]);
 
   const handleChange = ({ target }) => {
     const { name, value, type, checked } = target;
+    
     setValidationErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
     if (name === "thumbNail") {
       setEventData((prev) => ({ ...prev, thumbNail: target.files[0] }));
@@ -180,26 +179,22 @@ export default function NewsForm({
     }
   };
 
-  const handleEditClick = () => {
-    setIsEditMode(true);
-  };
   const handleCancelEdit = () => {
+    setEventData({ ...EVENTS_INITIAL });
+    setSelectedEventId(null);
     setIsEditMode(false);
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setValidationErrors({}); // Clear previous validation errors
-    setError({ msg: '', type: '' });
-
-
+    setError({ msg: "", type: "" });
     try {
       // Validation for empty fields
       const newValidationErrors = {};
       fields.forEach((field) => {
-        if (!eventData[field.name] && field.type !== 'checkbox') {
-          newValidationErrors[field.name] = 'This field is required';
+        if (!eventData[field.name] && field.type !== "checkbox") {
+          newValidationErrors[field.name] = "This field is required";
         }
       });
       if (Object.keys(newValidationErrors).length > 0) {
@@ -225,83 +220,87 @@ export default function NewsForm({
           startDate: formattedDate,
           endDate: formattedDate,
           uuid: selectedEventId,
-          organizationUuid: organization || schoolUuid, // Corrected duplicated uuid property
+          OrganizationUuid: organization || schoolUuid, // Corrected duplicated uuid property
         });
+        onFormSubmit();
       } else {
         res = await addEvent({
           ...eventData,
           thumbNail: imgRes,
           publishedDate: formattedDate,
-          organizationUuid: organization || schoolUuid,
+          OrganizationUuid: organization || schoolUuid,
         });
         onFormSubmit();
       }
-
-      if (res) {
-        setError({ msg: 'Event submitted successfully', type: 'success' });
-        setIsEditMode(false);
-        setEventData({
-          ...EVENTS_INITIAL,
-          startDate: moment().format('YYYY-MM-DDTHH:mm'),
-          endDate: moment().format('YYYY-MM-DDTHH:mm'),
-        });
-
-
-      }
     } catch (error) {
-      setError({ msg: error.message || 'An error occurred', type: 'error' });
+      setError({ msg: error.message || "An error occurred", type: "error" });
       console.error("Error submitting form:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
       setEventData({
         ...EVENTS_INITIAL,
-        startDate: moment().format('YYYY-MM-DDTHH:mm'),
-        endDate: moment().format('YYYY-MM-DDTHH:mm'),
+        startDate: moment().format("YYYY-MM-DDTHH:mm"),
+        endDate: moment().format("YYYY-MM-DDTHH:mm"),
       });
+      const fileInput = document.getElementById("thumbNail");
+      if (fileInput) {
+        fileInput.value = ""; // Reset value to empty string
+      }
     }
   };
 
-
-  const filteredFields = fields.filter(field => field.name !== 'registrationRequired');
+  const filteredFields = fields.filter(
+    (field) => field.name !== "registrationRequired"
+  );
   return (
     <>
       <div className='flex flex-col w-full justify-center items-center bg-[url("/MessageSvg.svg")]'>
-        <h1 className="text-center mx-auto w-full my-3 text-4xl font-bold text-tcyan ">
+        <h1 className="text-center mx-auto w-full my-3 text-4xl font-bold text-tgreen ">
           Event Details Form
         </h1>
         <div
-          className="w-11/12 rounded-lg flex flex-col justify-center items-center bg-bcyan opacity-75 p-5"
+          className="w-11/12 rounded-lg flex flex-col justify-center items-center bg-bgreen opacity-75 p-5"
           onSubmit={handleSubmit}
         >
           <div className="w-full grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 ">
             {filteredFields.map((field) => (
-              <div key={field.name} className="w-full flex justify-center py-2 px-4">
+              <div
+                key={field.name}
+                className="w-full flex justify-center py-1 px-2 flex-col"
+              >
                 <label
                   htmlFor={field.name}
-                  className={`w-32 md:w-40 lg:w-40 p-2 text-xl font-bold`}
+                  className={`w-32 md:w-40 lg:w-40 p-2 text-md font-bold`}
                 >
                   {field.label}
                 </label>
-                <input
-                  name={field.name}
-                  className="w-1/2 p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
-                  id={field.name}
-                  type={field.type}
-                  value={
-                    field.name === "thumbNail"
-                      ? eventData[field.name]?.File?.filename
-                      : eventData[field.name]
-                  }
-                  onChange={handleChange}
-                  placeholder={field.placeholder}
-                  required
-                />
-                {validationErrors[field.name] && (
-                  <span className="text-red-500">{validationErrors[field.name]}</span>
-                )}
+                <div className="flex flex-col">
+                  <input
+                    ref={fileInputRef}
+                    name={field.name}
+                    className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
+                    id={field.name}
+                    type={field.type}
+                    value={
+                      field.name === "thumbNail"
+                        ? eventData[field.name]?.File?.filename
+                        : eventData[field.name]
+                    }
+                    onChange={handleChange}
+                    placeholder={field.placeholder}
+                    required
+                  />
+                  {validationErrors[field.name] && (
+                    <span className="text-red-500 text-sm mt-1">
+                      {validationErrors[field.name]}
+                    </span>
+                  )}
+                </div>
               </div>
             ))}
-            {profile.userType === ADMIN && <OrganizationDropDown />}
+            <div className="flex flex-col justify-start">
+              {profile.userType === ADMIN && <OrganizationDropDown />}
+            </div>
           </div>
           <div className="flex justify-center items-center mt-5">
             <div className="checkbox-container">
@@ -319,24 +318,24 @@ export default function NewsForm({
             </label>
           </div>
           {isEditMode ? (
-            <>
+            <div className="flex">
               <button
                 onClick={handleSubmit}
-                className="w-20 my-5 mx-2 p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 bg-white hover:bg-tcyan"
+                className="w-20 my-5 mx-2 p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 bg-white hover:bg-tgreen"
               >
                 Update
               </button>
               <button
                 onClick={handleCancelEdit}
-                className="w-20 my-5 mx-2 p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 bg-white hover:bg-red-500 text-red-500"
+                className="w-20 my-5 mx-2 p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 bg-red-400 hover:bg-red-500 text-white"
               >
                 Cancel
               </button>
-            </>
+            </div>
           ) : (
             <button
               onClick={handleSubmit}
-              className="w-20 my-5 mx-auto p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 bg-white hover:bg-cyan-500 text-cyan-500"
+              className="w-20 my-5 mx-auto  font-bold p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 bg-blue-400 text-white"
             >
               Submit
             </button>
@@ -345,7 +344,6 @@ export default function NewsForm({
         {isLoading && <Loader />} {/* Display loader if isLoading is true */}
       </div>
       {/* Render the checkbox before the submit button */}
-
     </>
   );
 }

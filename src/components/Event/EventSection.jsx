@@ -18,7 +18,7 @@ const EventSection = () => {
     // ... your card details remain unchanged
     {
       id: 1,
-      image: "",
+      image: "/events/cricket/_DSC0025.JPG",
       title: "Cricket",
       description: "Description for Different Card 1",
     },
@@ -48,7 +48,7 @@ const EventSection = () => {
     },
     {
       id: 6,
-      image: "/events/chair_race/_DSC0941.JPG",
+      image: "/events/price_distrubution/_DSC1386.JPG",
       title: "Price destribution",
       description: "Description for Different Card 2",
     },
@@ -73,7 +73,7 @@ const EventSection = () => {
                 className="flex items-center justify-between py-2 px-3"
                 style={{ backgroundColor: "rgb(211, 252, 210)" }}
               >
-                <h1 className="text-cyan-700  ">{card.title}</h1>
+                <h1 className="text-green-700  ">{card.title}</h1>
                 <button
                   className="bg-gray-900 text-xs text-white px-2 py-1 font-semibold rounded-md uppercase hover:bg-gray-700"
                   onClick={() => handleRoute(card.title)}

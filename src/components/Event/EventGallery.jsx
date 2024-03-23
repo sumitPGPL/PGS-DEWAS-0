@@ -24,7 +24,7 @@ export default function (props) {
       <div className="bg-white w-full relative  top-10 start-0 border-b border-gray-200 p-2 ">
         <div className="flex items-center justify-center md:py-0 flex-wrap">
           {categories.map((val) => (
-            <button type="button" onClick={() => handleCategory(val)} className={val === capitalize(category) ? 'text-cyan-700 hover:bg-cyan-700 focus:ring-cyan-200  hover:text-white border  bg-white focus:ring-4 focus:outline-none  rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3   dark:hover:text-white border-cyan-400 dark:text-cyan-200 dark:hover:bg-cyan-200 dark:bg-gray-900 dark:focus:ring-cyan-800' : 'text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800'}>{val}</button>
+            <button type="button" onClick={() => handleCategory(val)} className={val === capitalize(category) ? 'text-green-700 hover:bg-green-700 focus:ring-green-300  hover:text-white border  bg-white focus:ring-4 focus:outline-none  rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3   dark:hover:text-white border-green-600 dark:text-green-500 dark:hover:bg-green-500 dark:bg-gray-900 dark:focus:ring-green-800' : 'text-gray-900 border border-white hover:border-gray-200 dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 bg-white focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800'}>{val}</button>
           ))}
         </div>
       </div>
