@@ -2,6 +2,7 @@ import { api } from "@/lib/middleware/apiInceptor";
 import { EVENTS } from "..";
 import { toast } from "react-toastify";
 import { handleError } from "@/lib/helpers/handleErrors";
+const  {myUuid} =  require("@/lib/constants/school");
 export const addEvent = async (payload) => {
   try 
   {
@@ -34,7 +35,7 @@ export const getEvent = async ({ schoolUuid = "", limit = 5, page = 1 }) => {
         },
       });
     } else {
-      res = await api.get(`${EVENTS}/all/${schoolUuid}`, {
+      res = await api.get(`${EVENTS}/all/${myUuid}`, {
         params: {
           limit: limit,
           page: page,

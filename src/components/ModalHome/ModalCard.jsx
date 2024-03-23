@@ -120,7 +120,7 @@ export default function ModalCard() {
           <div className='hidden md:flex lg:flex flex-col justify-center items-center mt-5 md:mt-0 max-w-3xl'>
           <Image
           alt="image"
-          src="/AboutCarosoul/4.png"
+          src="/labsImages/2 (8).jpg"
           width={600}
           height={500}
           className='rounded-full'

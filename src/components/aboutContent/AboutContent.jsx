@@ -23,7 +23,7 @@ const About = () => {
     "/gallarySlider/1 (16).jpeg",
     "/gallarySlider/1 (15).jpeg",
 
-    // Add more images as needed
+    
   ];
 
   const items = [

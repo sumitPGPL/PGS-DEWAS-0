@@ -7,6 +7,7 @@ import {
 import { loadProfile } from "@/lib/services/user/userServices";
 import injectToken from "@/app/actions";
 import { getAllNews } from "@/lib/services/news";
+import { myUuid } from "@/lib/constants/school";
 
 export default async function page() {
   const isFailed = await injectToken();
@@ -25,7 +26,7 @@ export default async function page() {
         label: city,
       }));
     }
-    clientProps.newsList = await getAllNews(schoolUuid);
+    clientProps.newsList = await getAllNews(myUuid);
     clientProps.isFailed = false;
     clientProps.profie = profie;
     clientProps.schoolUuid = schoolUuid;

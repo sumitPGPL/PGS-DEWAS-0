@@ -5,6 +5,7 @@ import { getAllNews, deleteNews } from "@/lib/services/news/index";
 import NewsForm from "@/components/News/NewsForm";
 import NewsTable from "@/components/News/NewsTable";
 import { getAuthToken } from "@/lib/middleware/apiInceptor";
+import { myUuid } from "@/lib/constants/school";
 
 const NewsPage = ({ clientProps }) => {
   const router = useRouter();
@@ -15,7 +16,7 @@ const NewsPage = ({ clientProps }) => {
   const fetchNews = async () => {
     try {
       setIsLoading(true);
-      const newsData = await getAllNews(schoolUuid);
+      const newsData = await getAllNews(myUuid);
       setNewsList(newsData);
     } catch (error) {
       console.error("Error fetching news:", error);
@@ -26,7 +27,7 @@ const NewsPage = ({ clientProps }) => {
 
   const handleFormSubmit = async () => {
     try {
-      const updatedNewsList = await getAllNews();
+      const updatedNewsList = await getAllNews(myUuid);
       setNewsList(updatedNewsList);
     } catch (error) {
       console.error("Error submitting form:", error);

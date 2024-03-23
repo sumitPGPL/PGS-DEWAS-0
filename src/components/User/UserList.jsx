@@ -76,7 +76,7 @@ const UserList = ({ users = {} }) => {
                         aria-describedby="helper-checkbox-text"
                         type="checkbox"
                         value=""
-                        class="w-4 h-4 text-cyan-600 bg-gray-100 border-gray-300 rounded focus:ring-cyan-500 dark:focus:ring-cyan-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                       />
                       <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
                         <img
@@ -109,11 +109,11 @@ const UserList = ({ users = {} }) => {
                     <span
                       class={`px-2 py-1 font-semibold leading-tight   ${
                         user.isActive
-                          ? "bg-cyan-100 text-cyan-700"
+                          ? "bg-green-100 text-green-700"
                           : "bg-red-700 text-white"
                       } rounded-full dark:${
-                        user.isActive ? "bg-cyan-700" : "bg-red-700"
-                      } dark:text-cyan-100`}
+                        user.isActive ? "bg-green-700" : "bg-red-700"
+                      } dark:text-green-100`}
                     >
                       {user.isActive ? "Approved" : "Not -Approved"}{" "}
                     </span>
@@ -124,7 +124,7 @@ const UserList = ({ users = {} }) => {
                   <td className="px-4 py-3 text-xs">
                     <button
                       onClick={() => handleEditUser(user)}
-                      className="bg-cyan-100 hover:bg-cyan-700 hover:text-white px-3 py-1 font-semibold leading-tight text-cyan-700"
+                      className="bg-green-100 hover:bg-green-700 hover:text-white px-3 py-1 font-semibold leading-tight text-green-700"
                     >
                       Edit
                     </button>

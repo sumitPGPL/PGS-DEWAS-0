@@ -15,9 +15,10 @@ const Dashboard = ({ clientProps }) => {
     news = [],
     events = [],
 
-    notice = [],
+    notice =[],
 
     profie = {},
+
   } = clientProps;
 
   if (isFailed) {
@@ -453,8 +454,8 @@ const Dashboard = ({ clientProps }) => {
                       >
                         <path d="M11 4c-3.855 0-7 3.145-7 7v28c0 3.855 3.145 7 7 7h28c3.855 0 7-3.145 7-7V11c0-3.855-3.145-7-7-7zm0 2h28c2.773 0 5 2.227 5 5v28c0 2.773-2.227 5-5 5H11c-2.773 0-5-2.227-5-5V11c0-2.773 2.227-5 5-5zm25.234 9.832l-13.32 15.723-8.133-7.586-1.363 1.465 9.664 9.015 14.684-17.324z" />
                       </svg>
-                      {moment(news.publishedDate).format("DD-MM-YYYY")}
-                     
+                      {moment(news?.publishedDate).format("DD-MM-YYYY")}
+                      {/* {new Date(news.publishedDate).toLocaleString()} */}
                     </span>
                   </div>
                   {/* View Button */}
@@ -473,11 +474,13 @@ const Dashboard = ({ clientProps }) => {
           </div>
         </div>
 
+        
+
         <div className="md:col-span-2 xl:col-span-1">
           <div className="rounded bg-gray-200 dark:bg-gray-800 p-3  min-h-[350px] overflow-y-auto">
             <div className="flex justify-between py-1 text-black dark:text-white ">
               <h3 className="text-md font-semibold">News Update </h3>
-              <Link href="/admin/notice">
+              <Link href="/admin/notices">
                 <button
                   className="bg-blue-500 dark:bg-gray-100 text-white active:bg-blue-600 dark:text-gray-800 dark:active:text-gray-700 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                   type="button"
@@ -675,7 +678,165 @@ const Dashboard = ({ clientProps }) => {
       </div>
     </div> */}
 
-      
+      <div className="mt-8 mx-4">
+        <div className="p-4 bg-blue-50 dark:bg-gray-800 dark:text-gray-50 border border-blue-500 dark:border-gray-500 rounded-lg shadow-md">
+          <h4 className="text-lg font-semibold">
+            Have taken ideas & reused components from the following resources:
+          </h4>
+          <ul>
+            <li className="mt-3">
+              <a
+                className="flex items-center text-blue-700 dark:text-gray-100"
+                href="https://tailwindcomponents.com/component/sidebar-navigation-1"
+                target="_blank"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="transform transition-transform duration-500 ease-in-out"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+                <span className="inline-flex pl-2">Sidebar Navigation</span>
+              </a>
+            </li>
+            <li className="mt-2">
+              <a
+                className="flex items-center text-blue-700 dark:text-gray-100"
+                href="https://tailwindcomponents.com/component/contact-form-1"
+                target="_blank"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="transform transition-transform duration-500 ease-in-out"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+                <span className="inline-flex pl-2">Contact Form</span>
+              </a>
+            </li>
+            <li className="mt-2">
+              <a
+                className="flex items-center text-blue-700 dark:text-gray-100"
+                href="https://tailwindcomponents.com/component/trello-panel-clone"
+                target="_blank"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="transform transition-transform duration-500 ease-in-out"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+                <span className="inline-flex pl-2">
+                  Section: Task Summaries
+                </span>
+              </a>
+            </li>
+            <li className="mt-2">
+              <a
+                className="flex items-center text-blue-700 dark:text-gray-100"
+                href="https://windmill-dashboard.vercel.app/"
+                target="_blank"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="transform transition-transform duration-500 ease-in-out"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+                <span className="inline-flex pl-2">Section: Client Table</span>
+              </a>
+            </li>
+            <li className="mt-2">
+              <a
+                className="flex items-center text-blue-700 dark:text-gray-100"
+                href="https://demos.creative-tim.com/notus-js/pages/admin/dashboard.html"
+                target="_blank"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="transform transition-transform duration-500 ease-in-out"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+                <span className="inline-flex pl-2">
+                  Section: Social Traffic
+                </span>
+              </a>
+            </li>
+            <li className="mt-2">
+              <a
+                className="flex items-center text-blue-700 dark:text-gray-100"
+                href="https://mosaic.cruip.com"
+                target="_blank"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  className="transform transition-transform duration-500 ease-in-out"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+                <span className="inline-flex pl-2">
+                  Section: Recent Activities
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </>
   );
 };

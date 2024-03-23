@@ -7,51 +7,117 @@ import ProfileUploader from "../UploadFile/DpUploader";
 import { useUserConext } from "@/features/context/UserContext";
 import { first, isEmpty } from "lodash";
 import { uploadImg } from "@/lib/services/files/fileServices";
-import { redirect } from "next/navigation";
+import Tooltip from "@/components/Tooltip/Tooltip";
+import { toast } from "react-toastify";
+import { validateInputs } from "@/lib/helpers/isValidInput";
 
 const UserForm = ({ roles = [] }) => {
   const [user, setUser] = useState(USER_INITIAL);
+  const [password, setPassword] = useState(null);
   const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [prevImagePreview, setPrevImagePreview] = useState(null); // State for previously used image preview
   const { userState, setUserState } = useUserConext();
+  const [showTooltip, setShowTooltip] = useState(false);
+  const handleHover = (event) => {
+    setShowTooltip(true);
+  };
+
+  const handleLeave = () => {
+    setShowTooltip(false);
+  };
+
   const handleChange = ({ target }) => {
     const { name, value, type, checked } = target;
     setUser((prevState) => ({
       ...prevState,
       [name]: type === "checkbox" ? checked : value,
     }));
-  };
-  const handleUser = async () => {
-    let imgRes = await uploadImg({ img: image, category: "profile" });
-    if (imgRes) {
-      await addUser({ ...user, profilePicture: imgRes });
-      setUser(USER_INITIAL);
-    } else {
-      //TODO: handle failure
+    if (name === "password") {
+      setPassword(value);
     }
   };
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setImage(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const handleUser = async () => {
+    if (!image && !image?.size > 0) {
+      toast.warning(`Profile image can't be empty.`);
+      return
+    }
+    const res = validateInputs({ ...user, password });
+    if (res !== true) {
+      toast.warning(res);
+      return;
+    } else {
+      let imgRes = await uploadImg({ img: image, category: "profile" });
+      if (imgRes) {
+        await addUser({ ...user, password: password, profilePicture: imgRes });
+        setUser(USER_INITIAL);
+        setImage(null);
+        setImagePreview(null);
+        setPassword(null);
+      } else {
+        //TODO: handle failure
+      }
+    }
+  };
+
   const handleCancel = () => {
     setUserState((prev) => ({ ...prev, user: {} }));
     setUser(USER_INITIAL);
+    setImage(null);
+    setImagePreview(null);
   };
 
   const handleUpdate = async () => {
-    if (user.profilePicture !== image) {
-      let imgRes = await uploadImg({ img: image, category: "profile" });
-      if (imgRes) {
-        let res = await updateUser({ ...user, profilePicture: imgRes });
-        setUser(USER_INITIAL);
-      } else {
-        //TODO: hanlde error
-      }
+    const res = validateInputs({ ...user, password });
+    if (!res) {
+      toast.warning(res.err);
+      return;
     } else {
-      let res = await updateUser(user);
-      setUser(USER_INITIAL);
+      if (isEmpty(password)) {
+        delete user.password;
+      } else {
+        setUser((prev) => ({ ...prev, password: password }));
+      }
+      if (user.profilePicture !== image) {
+        let imgRes = await uploadImg({ img: image, category: "profile" });
+        if (imgRes) {
+          let res = await updateUser({ ...user, profilePicture: imgRes });
+          setUser(USER_INITIAL);
+          setImage(null);
+          setImagePreview(null);
+          setPassword(null);
+        } else {
+          //TODO: handle error
+        }
+      } else {
+        let res = await updateUser(user);
+        setUser({ ...USER_INITIAL });
+        setImage(null);
+        setImagePreview(null);
+        setPassword(null);
+      }
     }
   };
   useEffect(() => {
-    let userRoles = first(userState?.user?.Roles);
-    setImage(userState.user.profilePicture);
-    setUser({ ...userState.user, roles: [userRoles?.uuid] });
+    if (!isEmpty(userState.user)) {
+      let userRoles = first(userState?.user?.Roles);
+      setImage(userState.user.profilePicture);
+      setImagePreview(userState.user.profilePicture);
+      setPrevImagePreview(userState.user.profilePicture); // Set previously used image preview
+      setUser({ ...userState.user, roles: [userRoles?.uuid] });
+    }
   }, [userState.user]);
 
   return (
@@ -79,7 +145,7 @@ const UserForm = ({ roles = [] }) => {
                       name="firstName"
                       value={user.firstName}
                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                      placeholder=""
+                      placeholder="Enter first name"
                     />
                   </div>
 
@@ -91,7 +157,7 @@ const UserForm = ({ roles = [] }) => {
                       name="lastName"
                       value={user.lastName}
                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                      placeholder=""
+                      placeholder="Enter last name"
                     />
                   </div>
 
@@ -103,7 +169,7 @@ const UserForm = ({ roles = [] }) => {
                       name="email"
                       value={user.email}
                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                      placeholder="email@domain.com"
+                      placeholder="Enter valid email address"
                     />
                   </div>
                   <div class="md:col-span-2">
@@ -113,8 +179,9 @@ const UserForm = ({ roles = [] }) => {
                       onChange={handleChange}
                       name="phone"
                       value={user.phone}
+                      maxLength={10}
                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                      placeholder=""
+                      placeholder="Enter mobile number"
                     />
                   </div>
 
@@ -126,7 +193,7 @@ const UserForm = ({ roles = [] }) => {
                       name="address"
                       value={user.address}
                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                      placeholder=""
+                      placeholder="Enter address"
                     />
                   </div>
 
@@ -138,19 +205,30 @@ const UserForm = ({ roles = [] }) => {
                       name="city"
                       value={user.city}
                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                      placeholder=""
+                      placeholder="Enter City"
                     />
                   </div>
 
                   <div class="md:col-span-2">
+                    {showTooltip && !isEmpty(userState.user) ? (
+                      <Tooltip
+                        text={"Enter password if you want to update password "}
+                      />
+                    ) : (
+                      ""
+                    )}
                     <label for="password">Password</label>
-                    <div class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
+                    <div
+                      onMouseEnter={handleHover}
+                      onMouseLeave={handleLeave}
+                      class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1"
+                    >
                       <input
-                        autoComplete="off"
+                        autoComplete="new-password"
                         name="password"
                         onChange={handleChange}
                         type="password"
-                        value={user.password}
+                        value={password}
                         placeholder="password"
                         class="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent"
                       />
@@ -163,7 +241,7 @@ const UserForm = ({ roles = [] }) => {
                         name="state"
                         onChange={handleChange}
                         value={user.state}
-                        placeholder="State"
+                        placeholder="Enter State"
                         class="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent"
                       />
                     </div>
@@ -177,7 +255,7 @@ const UserForm = ({ roles = [] }) => {
                       name="pinCode"
                       value={user.pinCode}
                       class="transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                      placeholder=""
+                      placeholder="Enter pincode"
                     />
                   </div>
 
@@ -192,7 +270,7 @@ const UserForm = ({ roles = [] }) => {
                           onChange={handleChange}
                           class="sr-only peer"
                         />
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-cyan-200 dark:peer-focus:ring-cyan-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                         <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
                           Mark as Active
                         </span>
@@ -206,7 +284,7 @@ const UserForm = ({ roles = [] }) => {
                           onChange={handleChange}
                           class="sr-only peer"
                         />
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-cyan-200 dark:peer-focus:ring-cyan-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-cyan-600"></div>
+                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                         <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
                           Mark as Suspicious
                         </span>
@@ -225,14 +303,14 @@ const UserForm = ({ roles = [] }) => {
                       {isEmpty(userState.user) ? (
                         <button
                           onClick={handleUser}
-                          class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded"
+                          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         >
                           Save
                         </button>
                       ) : (
                         <button
                           onClick={handleUpdate}
-                          class="bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-2 px-4 rounded"
+                          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         >
                           Update
                         </button>
