@@ -8,6 +8,7 @@ import { getEvent } from "@/lib/services/events/eventSevices";
 import { getAllNotice } from "@/lib/services/notices/index";
 
 import { getSchoolDetails } from "@/lib/services/schools/schoolservices";
+import { myUuid } from "@/lib/constants/school";
 
 
 async function AdminDashboard(props) {
@@ -26,13 +27,13 @@ async function AdminDashboard(props) {
     clientProps.users = await getUsers({ limit: 5, page: 1 });
 
     clientProps.admissions = await getAllAdmissions();
-    clientProps.news = await getAllNews();
+    clientProps.news = await getAllNews(myUuid);
     clientProps.notice = await getAllNotice();
-    clientProps.events = await getEvent({ limit: 5, page: 1 });
+    clientProps.events = await getEvent({schoolUuid:myUuid, limit: 5, page: 1 });
 
-    clientProps.news = await getAllNews(schoolUuid);
+    clientProps.news = await getAllNews(myUuid);
 
-    clientProps.events = await getEvent({ schoolUuid, limit: 5, page: 1 });
+    clientProps.events = await getEvent({ schoolUuid:myUuid, limit: 5, page: 1 });
 
     clientProps.isFailed = false;
     clientProps.profie = profie;

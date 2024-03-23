@@ -2,9 +2,10 @@ import { api } from "@/lib/middleware/apiInceptor"
 import { ADDMISSONS } from ".."
 
 export const getAllAdmissions =async(payload) =>{
- let res = await api.get(ADDMISSONS)
+ let res = [{}]
+//  await api.get(ADDMISSONS)
  if(res){
-    return res.data.payload
+    return res
  }
  else{
     res.error ='error'
