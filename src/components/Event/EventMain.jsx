@@ -12,9 +12,9 @@ const EventMain = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const images = [
-    "/events/bannerCarousel/jpeg-optimizer__DSC0752.JPG",
-    "/events/bannerCarousel/jpeg-optimizer__DSC1401.JPG",
-    "/events/bannerCarousel/jpeg-optimizer__DSC0444.JPG",
+    "/gallarySlider/1 (1).jpeg",
+    "/gallarySlider/1 (2).jpeg",
+    "/gallarySlider/1 (5).jpeg",
     // Add more images as needed
   ];
 
