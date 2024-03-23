@@ -5,6 +5,7 @@ import moment from "moment";
 import { getAllNews } from "@/lib/services/news/index";
 import NewNewsCard from '@/components/Card/NewNewsCard'
 import Pagination from "@/components/Pagination/Pagination";
+import { myUuid } from "@/lib/constants/school";
 
 const NewsList = ({ newsList }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,7 +65,7 @@ const NewsPage = () => {
     const fetchNews = async () => {
       try {
         setIsLoading(true);
-        const newsData = await getAllNews();
+        const newsData = await getAllNews(myUuid);
         setNewsList(newsData);
       } catch (error) {
         console.error("Error fetching news:", error);

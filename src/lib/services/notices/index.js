@@ -2,7 +2,7 @@ import { api } from "@/lib/middleware/apiInceptor";
 import { NOTICES } from "..";
 import { toast } from "react-toastify";
 import { handleError } from "@/lib/helpers/handleErrors";
-
+const  {myUuid} =  require("@/lib/constants/school");
 export const addNotice = async (payload) => {
   const res = await api.post(NOTICES, payload);
   if (res) {
@@ -16,7 +16,7 @@ export const getAllNotice = async (schoolUuid = "") => {
     if (!schoolUuid) {
       res = await api.get(NOTICES);
     } else {
-      res = await api.get(`${NOTICES}/all/${schoolUuid}`);
+      res = await api.get(`${NOTICES}/all/${myUuid}`);
     }
     if (res) {
       return res.data.payload.data;

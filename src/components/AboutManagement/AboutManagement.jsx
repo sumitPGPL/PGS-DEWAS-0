@@ -43,14 +43,24 @@ export default function AboutManagement() {
             />
           </div>
         </div>
+        <div className="flex gap-4"> 
         <button
-          className="bg-white border-2 border-tcyan p-3 mt-5 rounded-md hover:bg-tcyan"
+          className="bg-white border-2 border-tgreen p-3 mt-5 rounded-md hover:bg-tcyan"
+          onClick={() => {
+            router.push("/about/mentor"); 
+          }}
+        >
+        View Our Mentors
+        </button>
+        <button
+          className="bg-white border-2 border-tgreen p-3 mt-5 rounded-md hover:bg-tcyan"
           onClick={() => {
             router.push("/about/school-staff");
           }}
         >
           View Our Staff
         </button>
+        </div>
 
         <Monuments />
       </div>

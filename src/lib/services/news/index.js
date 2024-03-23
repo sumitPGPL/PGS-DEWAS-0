@@ -2,7 +2,7 @@ import { api } from "@/lib/middleware/apiInceptor";
 import { ADD_NEWS } from "..";
 import { toast } from "react-toastify";
 import { handleError } from "@/lib/helpers/handleErrors";
-import { isEmpty } from "lodash";
+const  {myUuid} =  require("@/lib/constants/school");
 
 export const addNews = async (payload) => {
   const res = await api.post(ADD_NEWS, payload);
@@ -17,7 +17,7 @@ export const getAllNews = async (schoolUuid = "") => {
     if (!schoolUuid) {
       res = await api.get(ADD_NEWS);
     } else {
-      res = await api.get(`${ADD_NEWS}/all/${schoolUuid}`);
+      res = await api.get(`${ADD_NEWS}/all/${myUuid}`);
     }
     return res.data.payload.data;
   } catch (error) {

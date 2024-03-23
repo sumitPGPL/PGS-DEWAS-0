@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { getEvent } from "@/lib/services/events/eventSevices";
 import Card from "@/components/Card/Card";
 import NewEventCard from "../Card/NewEventCard";
+import { myUuid } from "@/lib/constants/school";
 
 const EventCard = ({ events }) => {
   return (
@@ -26,7 +27,7 @@ const EventList = () => {
     const fetchEvents = async () => {
       try {
         setIsLoading(true);
-        const eventData = await getEvent({ limit, page });
+        const eventData = await getEvent({schoolUuid:myUuid, limit, page });
         setEventList(eventData.data);
         console.log(eventData.data);
       } catch (error) {
