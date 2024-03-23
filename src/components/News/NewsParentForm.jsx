@@ -5,18 +5,22 @@ import { getAllNews, deleteNews } from "@/lib/services/news/index";
 import NewsForm from "@/components/News/NewsForm";
 import NewsTable from "@/components/News/NewsTable";
 import { getAuthToken } from "@/lib/middleware/apiInceptor";
-import { myUuid } from "@/lib/constants/school";
 
 const NewsPage = ({ clientProps }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedNewsId, setSelectedNewsId] = useState(null);
-  const { schools = [], schoolUuid = '', profie = {}, newsList = [] } = clientProps
+  const {
+    schools = [],
+    schoolUuid = "",
+    profie = {},
+    newsList = [],
+  } = clientProps;
   const [news, setNewsList] = useState(clientProps.newsList);
   const fetchNews = async () => {
     try {
       setIsLoading(true);
-      const newsData = await getAllNews(myUuid);
+      const newsData = await getAllNews(schoolUuid);
       setNewsList(newsData);
     } catch (error) {
       console.error("Error fetching news:", error);
@@ -27,8 +31,9 @@ const NewsPage = ({ clientProps }) => {
 
   const handleFormSubmit = async () => {
     try {
-      const updatedNewsList = await getAllNews(myUuid);
+      const updatedNewsList = await getAllNews(schoolUuid);
       setNewsList(updatedNewsList);
+      setSelectedNewsId(null);
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -78,12 +83,9 @@ const NewsPage = ({ clientProps }) => {
         selectedNewsId={selectedNewsId}
         onFormSubmit={handleFormSubmit}
         newsList={news}
+        setSelectedNewsId={setSelectedNewsId}
       />
-      <NewsTable
-        newsList={news}
-        onDelete={handleDelete}
-        onEdit={handleEdit}
-      />
+      <NewsTable newsList={news} onDelete={handleDelete} onEdit={handleEdit} />
     </div>
   );
 };

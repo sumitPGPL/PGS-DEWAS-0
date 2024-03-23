@@ -1,8 +1,7 @@
-
 // components/NewsTable/NewsTable.jsx
-import React, { useState, useEffect } from 'react';
-import moment from 'moment';
-import Pagination from '@/components/Pagination/Pagination'; // Import your Pagination component
+import React, { useState, useEffect } from "react";
+import moment from "moment";
+import Pagination from "@/components/Pagination/Pagination"; // Import your Pagination component
 
 const NewsTable = ({ newsList, onDelete, onEdit }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,19 +63,23 @@ const NewsTable = ({ newsList, onDelete, onEdit }) => {
             {paginatedNewsList.map((news, index) => (
               <tr
                 key={index}
-                className={`${index % 2 === 0
-                  ? 'even:bg-gray-50 even:dark:bg-gray-800'
-                  : 'odd:bg-white odd:dark:bg-gray-900'
+                className={`${
+                  index % 2 === 0
+                    ? "even:bg-gray-50 even:dark:bg-gray-800"
+                    : "odd:bg-white odd:dark:bg-gray-900"
                 } border-b dark:border-gray-700`}
               >
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {news.title}
                 </td>
-                <td className="px-6 py-4">  {moment(news.publishedDate).format('YYYY-MM-DD HH:mm:ss')}</td>
+                <td className="px-6 py-4">
+                  {" "}
+                  {moment(news.publishedDate).format("YYYY-MM-DD HH:mm:ss")}
+                </td>
                 <td className="px-6 py-4">
                   <button
                     onClick={() => handleDelete(news.uuid)}
-                    className="font-medium text-cyan-600 dark:text-cyan-500 hover:underline"
+                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                   >
                     Delete
                   </button>
@@ -84,7 +87,7 @@ const NewsTable = ({ newsList, onDelete, onEdit }) => {
                 <td className="px-6 py-4">
                   <button
                     onClick={() => handleEdit(news.uuid)}
-                    className="font-medium text-cyan-600 dark:text-cyan-500 hover:underline"
+                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                   >
                     Edit
                   </button>
@@ -107,7 +110,9 @@ const NewsTable = ({ newsList, onDelete, onEdit }) => {
           <div className="fixed inset-0 z-50 flex items-center justify-center">
             <div className="absolute inset-0 bg-black opacity-50"></div>
             <div className="relative z-50 bg-white p-6 rounded-md">
-              <p className="text-lg font-semibold mb-4">Are you sure you want to delete this news?</p>
+              <p className="text-lg font-semibold mb-4">
+                Are you sure you want to delete this news?
+              </p>
               <div className="flex justify-end">
                 <button
                   onClick={closeDeleteModal}

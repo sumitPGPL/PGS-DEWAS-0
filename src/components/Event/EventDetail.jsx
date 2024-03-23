@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 import ImageGallery from "../ImageHomeGallary/ImageHomeGallary";
 import EventFormParticular from "./EventFormProvider";
+import Link from "next/link";
 
 const EventDetail = ({ eventData }) => {
   const {
@@ -28,19 +29,19 @@ const EventDetail = ({ eventData }) => {
       <div className="w-full">
         <h1 className="p-4 text-center text-5xl font-extrabold">{title}</h1>
         <div className="w-full h-20 flex justify-center items-center">
-          <button className="bg-cyan-400 p-4 rounded-b-xl hover:bg-cyan-200 duration-100 font-bold text-lg mx-4">
+          <button className="bg-cyan-400 p-4 rounded-b-xl hover:bg-green-500 duration-100 font-bold text-lg mx-4">
             Location: {location}
           </button>
-          <button className="bg-cyan-400 p-4 rounded-b-xl hover:bg-cyan-200 duration-100 font-bold text-lg mx-4">
+          <button className="bg-cyan-400 p-4 rounded-b-xl hover:bg-green-500 duration-100 font-bold text-lg mx-4">
             Start Date: {moment(startDate).format("DD-MM-YYYY")}
           </button>
-          <button className="bg-cyan-400 p-4 rounded-b-xl hover:bg-cyan-200 duration-100 font-bold text-lg mx-4">
+          <button className="bg-cyan-400 p-4 rounded-b-xl hover:bg-green-500 duration-100 font-bold text-lg mx-4">
             Start Time: {moment(startDate).format("h:mm:ss A")}
           </button>
-          <button className="bg-cyan-400 p-4 rounded-b-xl hover:bg-cyan-200 duration-100 font-bold text-lg mx-4">
+          <button className="bg-cyan-400 p-4 rounded-b-xl hover:bg-green-500 duration-100 font-bold text-lg mx-4">
             End Date: {moment(endDate).format("DD-MM-YYYY")}
           </button>
-          <button className="bg-cyan-400 p-4 rounded-b-xl hover:bg-cyan-200 duration-100 font-bold text-lg mx-4">
+          <button className="bg-cyan-400 p-4 rounded-b-xl hover:bg-green-500 duration-100 font-bold text-lg mx-4">
             End Time: {moment(endDate).format("h:mm:ss A")}
           </button>
         </div>
@@ -49,7 +50,7 @@ const EventDetail = ({ eventData }) => {
             <EventFormParticular />
           </div>
           <main
-            className="rounded-md w-1/2 mx-auto  h-96 flex flex-col justify-center  p-5  bg-cover bg-center border-2 border-tcyan"
+            className="rounded-md w-1/2 mx-auto  h-96 flex flex-col justify-center  p-5  bg-cover bg-center border-2 border-tgreen"
             style={{ backgroundImage: `url(${thumbNail})` }}
           ></main>
         </div>
@@ -63,6 +64,7 @@ const EventDetail = ({ eventData }) => {
       <div className="w-11/12 mx-auto">
         <ImageGallery />
       </div>
+      <Link href='/newsCard'><button type="button" class="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Archives</button></Link>
     </>
   );
 };

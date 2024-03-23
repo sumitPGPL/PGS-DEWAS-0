@@ -149,7 +149,7 @@ const EventSectionpart = () => {
                 className="flex items-center justify-between py-2 px-3"
                 style={{ backgroundColor: "rgb(211, 252, 210)" }}
               >
-                <h1 className="text-cyan-700  ">{card.title}</h1>
+                <h1 className="text-green-700  ">{card.title}</h1>
                 <button
                   className="bg-gray-900 text-xs text-white px-2 py-1 font-semibold rounded-md uppercase hover:bg-gray-700"
                   onClick={() => handleRoute(card.title)}

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { getEvent, deleteEvent } from "@/lib/services/events/eventSevices";
@@ -9,15 +9,21 @@ import EventTable from "@/components/Event/EventTable";
 const EventParent = ({ clientProps }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [allEvents, setAllEvents] = useState([]);
-  const { schools = [], schoolUuid = '', profie = {}, newsList = [] } = clientProps
+  const {
+    schools = [],
+    schoolUuid = "",
+    profie = {},
+    events = [],
+  } = clientProps;
   const [selectedEventId, setSelectedEventId] = useState(null);
 
   const fetchEvents = async (page) => {
     try {
       setIsLoading(true);
-      const eventData = await getEvent({ schoolUuid, limit: 6, page });
+      const eventData = await getEvent({ schoolUuid, limit: 25, page });
       const eventsArray = Array.isArray(eventData.data) ? eventData.data : [];
       setAllEvents(eventsArray);
+      setSelectedEventId(null);
     } catch (error) {
       console.error("Error fetching events:", error);
     } finally {
@@ -36,7 +42,7 @@ const EventParent = ({ clientProps }) => {
       setIsLoading(false);
     }
   };
-  
+
   const handleEdit = (uuid) => {
     setSelectedEventId(uuid);
   };
@@ -70,11 +76,15 @@ const EventParent = ({ clientProps }) => {
         onFormSubmit={fetchEvents}
         events={allEvents}
         selectedEventId={selectedEventId}
+        setSelectedEventId={setSelectedEventId}
       />
-      <EventTable events={allEvents} onDelete={handleDelete} onEdit={handleEdit} />
+      <EventTable
+        events={allEvents}
+        onDelete={handleDelete}
+        onEdit={handleEdit}
+      />
     </div>
   );
 };
 
 export default EventParent;
-
